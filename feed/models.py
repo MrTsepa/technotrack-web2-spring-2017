@@ -7,7 +7,7 @@ from django.db import models
 from core.models import Dated, Authored
 
 
-class CreationEvent(Dated):
+class CreationEvent(Dated, Authored):
     created_object = GenericForeignKey(ct_field='object_content_type', fk_field='object_id')
     object_content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()

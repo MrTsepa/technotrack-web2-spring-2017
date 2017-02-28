@@ -7,5 +7,5 @@ from feed.models import Feedable
 from likes.models import Likable
 
 
-class Post(Authored, Dated, Likable, Feedable):
+class Post(Feedable, Authored, Dated, Likable):
     text = models.TextField()

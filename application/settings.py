@@ -15,6 +15,8 @@ from ConfigParser import ConfigParser
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 config = ConfigParser()
@@ -139,3 +141,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+if TESTING:
+    print "NO MIGRATIONS"
+    print ""
+
+    class DisableMigrations():
+        def __contains__(self, item):
+            return True
+
+        def __getitem__(self, item):
+            return "nomigrations"
+
+    MIGRATION_MODULES = DisableMigrations()

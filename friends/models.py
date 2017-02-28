@@ -5,11 +5,11 @@ from core.models import Authored, Dated, User
 from feed.models import Feedable
 
 
-class Friendship(Authored, Dated, Feedable):
+class Friendship(Feedable, Authored, Dated):
     recipient = models.ForeignKey("core.User")
     approved = models.BooleanField(default=False)
 
 
 class Friend(models.Model):
-    user1 = models.ForeignKey("core.User", related_name="+")
-    user2 = models.ForeignKey("core.User")
+    user1 = models.ForeignKey("core.User", related_name="friends")
+    user2 = models.ForeignKey("core.User", related_name="+")

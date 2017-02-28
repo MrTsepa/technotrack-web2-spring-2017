@@ -8,7 +8,7 @@ from core.models import Authored, Dated
 from feed.models import Feedable
 
 
-class Like(Authored, Dated, Feedable):
+class Like(Feedable, Authored, Dated):
     target = GenericForeignKey(ct_field='target_content_type', fk_field='target_id')
     target_content_type = models.ForeignKey(ContentType)
     target_id = models.PositiveIntegerField()
