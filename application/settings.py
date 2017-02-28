@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'ugc.apps.UgcConfig',
     'chats.apps.ChatsConfig',
     'friends.apps.FriendsConfig',
+    'likes.apps.LikesConfig',
+    'feed.apps.FeedConfig',
 ]
 
 MIDDLEWARE = [
@@ -102,7 +104,8 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    ''' NEVER DO THIS!!! '''
+    # NEVER DO THIS
+
     # {
     #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     # },

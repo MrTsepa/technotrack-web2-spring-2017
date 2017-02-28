@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from application import settings
+
 
 class User(AbstractUser):
 
@@ -10,7 +12,7 @@ class User(AbstractUser):
 
 
 class Authored(models.Model):
-    author = models.ForeignKey(User, related_name="%(app_label)s_%(class)s_related")
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="%(app_label)s_%(class)s_related")
 
     class Meta:
         abstract = True
