@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
+from django_achievements.models import Achievement
 from .models import User, Authored
 
 authored_inlines = ()
@@ -12,6 +13,11 @@ for subclass in Authored.__subclasses__():
     authored_inlines += (SubclassInline,)
 
 
+class AchievementInline(admin.TabularInline):
+    model = User.achievements.through
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, admin.ModelAdmin):
     inlines = authored_inlines
+    inlines += AchievementInline,

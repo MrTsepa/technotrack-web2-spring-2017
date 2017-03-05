@@ -19,15 +19,15 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-config = ConfigParser()
-config.read(os.path.join(BASE_DIR, '../django.conf'))
+# config = ConfigParser()
+# config.read(os.path.join(BASE_DIR, '../django.conf'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config.get('main', 'SECRET')
-
+# SECRET_KEY = config.get('main', 'SECRET')
+SECRET_KEY = '123'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'friends.apps.FriendsConfig',
     'likes.apps.LikesConfig',
     'feed.apps.FeedConfig',
+    'django_achievements.apps.DjangoAchievementsConfig',
 ]
 
 MIDDLEWARE = [
@@ -92,12 +93,16 @@ WSGI_APPLICATION = 'application.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': config.get('db', 'NAME'),
+    #     'USER': config.get('db', 'USER'),
+    #     'PASSWORD': config.get('db', 'PASSWORD'),
+    #     'HOST': 'localhost',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config.get('db', 'NAME'),
-        'USER': config.get('db', 'USER'),
-        'PASSWORD': config.get('db', 'PASSWORD'),
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'social_network2',
     }
 }
 
@@ -142,16 +147,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
-if TESTING:
-    print "NO MIGRATIONS"
-    print ""
-
-    class DisableMigrations():
-        def __contains__(self, item):
-            return True
-
-        def __getitem__(self, item):
-            return "nomigrations"
-
-    MIGRATION_MODULES = DisableMigrations()
+# TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+# if TESTING:
+#     print "NO MIGRATIONS"
+#     print ""
+#
+#     class DisableMigrations():
+#         def __contains__(self, item):
+#             return True
+#
+#         def __getitem__(self, item):
+#             return "nomigrations"
+#
+#     MIGRATION_MODULES = DisableMigrations()

@@ -13,7 +13,7 @@ class Achievement(models.Model):
 
 
 class Achievable(models.Model):
-    achievements = models.ManyToManyField(Achievement)
+    achievements = models.ManyToManyField(Achievement, editable=False)
 
     class Meta:
         abstract = True
