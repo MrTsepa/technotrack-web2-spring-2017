@@ -1,10 +1,10 @@
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_save, post_delete
 
 
 class Achievement:
     name = None
-    model = None
-    observed_model = None
+    model = None  # object of this type is checked with business logic
+    observed_model = None   # saving something of this type initiates checks, by default is same as model
     title = None
     description = None
 
@@ -46,7 +46,6 @@ def register(achievement_class):
         if not check_res and a in achievable.achievements.all():
             achievable.achievements.remove(a)
 
-    from django.db.models.signals import post_save
     post_save.connect(check_achievement, sender=achievement_class.observed_model, weak=False)
     post_delete.connect(check_achievement, sender=achievement_class.observed_model, weak=False)
 
