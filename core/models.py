@@ -3,11 +3,11 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from django_achievements.models import Achievable
 from application import settings
 
 
-class User(AbstractUser):
-
+class User(AbstractUser, Achievable):
     pass
 
 

@@ -24,6 +24,7 @@ class Likable(models.Model):
         content_type_field='target_content_type',
         object_id_field='target_id'
     )
+    likescount = models.PositiveIntegerField(default=0, editable=False)
 
     class Meta:
         abstract = True
