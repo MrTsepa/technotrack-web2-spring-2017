@@ -1,4 +1,4 @@
-from django_achievements.utils import Achievement, register
+from django_achievements.registration import Achievement, register
 from likes.models import Like
 from ugc.models import Post
 from .models import User

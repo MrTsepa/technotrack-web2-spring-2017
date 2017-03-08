@@ -7,4 +7,9 @@ class CoreConfig(AppConfig):
     name = 'core'
 
     def ready(self):
-        import achievements
+        from django.db.backends.signals import connection_created
+        from django.dispatch import receiver
+
+        @receiver(connection_created)
+        def register_achievements(*args, **kwargs):
+            import achievements
