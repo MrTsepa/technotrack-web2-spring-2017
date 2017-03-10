@@ -2,12 +2,19 @@ from .registry import AchievementRegistry
 
 
 class Achievement:
-    name = None  # must be unique
+    """
+    Base class for all registered achievements.
+    Implement methods 'check_for' for checking logic of achievement
+    and 'get_achievable' to know for whom to assign achievements.
+    """
+    
+    '''this is unique identifier of achievement'''
+    name = None
 
     '''object of this type is checked with business logic'''
     model = None
 
-    '''saving something of this type initiates checks, by default is same as model'''
+    '''saving object of this type initiates checks, by default is same as model'''
     observed_model = None
 
     title = None
