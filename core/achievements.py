@@ -21,7 +21,7 @@ class PostCountAchievement(Achievement):
 
     @classmethod
     def get_model_instance_for_observed_model(cls, instance):
-        assert isinstance(instance, cls.observed_model)
+        assert isinstance(instance, cls.get_observed_model())
         return instance.author
 
 
@@ -66,7 +66,7 @@ class LikeCountAchievement(Achievement):
 
     @classmethod
     def get_model_instance_for_observed_model(cls, observed_model_instance):
-        assert isinstance(observed_model_instance, cls.observed_model)
+        assert isinstance(observed_model_instance, cls.get_observed_model())
         return observed_model_instance.target
 
 
