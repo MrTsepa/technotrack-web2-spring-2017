@@ -1,16 +1,15 @@
 from django.test import TestCase
 
 from core.models import User
-from django_achievements.registration import register, unregister
+from django_achievements.registration import register, unregister, unregister_all_achievements
 from likes.models import Like
 from ugc.models import Post
-from .models import Achievement
+from .models import AchievementModel
+from .registration import Achievement
 
 
 class PostCountAchievementTestCase(TestCase):
     def setUp(self):
-        from registration import Achievement
-
         class PostCountAchievement(Achievement):
             model = User
             count = None
@@ -59,9 +58,9 @@ class PostCountAchievementTestCase(TestCase):
     def test_achievement_added(self):
         u1 = User.objects.create(username='u1')
         u1_id = u1.id
-        a1 = Achievement.objects.get(name='1_post')
-        a10 = Achievement.objects.get(name='10_posts')
-        a100 = Achievement.objects.get(name='100_posts')
+        a1 = AchievementModel.objects.get(name='1_post')
+        a10 = AchievementModel.objects.get(name='10_posts')
+        a100 = AchievementModel.objects.get(name='100_posts')
 
         for i in range(1, 110):
             Post.objects.create(author=u1)
@@ -83,9 +82,9 @@ class PostCountAchievementTestCase(TestCase):
         u1 = User.objects.create(username='u1')
         u1_id = u1.id
 
-        a1 = Achievement.objects.get(name='1_post')
-        a10 = Achievement.objects.get(name='10_posts')
-        a100 = Achievement.objects.get(name='100_posts')
+        a1 = AchievementModel.objects.get(name='1_post')
+        a10 = AchievementModel.objects.get(name='10_posts')
+        a100 = AchievementModel.objects.get(name='100_posts')
 
         for _ in range(1, 110):
             Post.objects.create(author=u1)
@@ -118,8 +117,6 @@ class PostCountAchievementTestCase(TestCase):
 
 class LikeCountAchievementTestCase(TestCase):
     def setUp(self):
-        from registration import Achievement
-
         class LikeCountAchievement(Achievement):
             model = Post
             count = None
@@ -174,9 +171,9 @@ class LikeCountAchievementTestCase(TestCase):
         for i in range(120):
             users.append(User.objects.create(username='u'+str(i)))
 
-        a1 = Achievement.objects.get(name='1_like')
-        a10 = Achievement.objects.get(name='10_likes')
-        a100 = Achievement.objects.get(name='100_likes')
+        a1 = AchievementModel.objects.get(name='1_like')
+        a10 = AchievementModel.objects.get(name='10_likes')
+        a100 = AchievementModel.objects.get(name='100_likes')
 
         self.assertTrue(a1 not in u1.achievements.all())
         self.assertTrue(a10 not in u1.achievements.all())

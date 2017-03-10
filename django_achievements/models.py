@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class Achievement(models.Model):
+class AchievementModel(models.Model):
     name = models.CharField(max_length=255, unique=True, primary_key=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -13,7 +13,7 @@ class Achievement(models.Model):
 
 
 class Achievable(models.Model):
-    achievements = models.ManyToManyField(Achievement, editable=False)
+    achievements = models.ManyToManyField(AchievementModel, editable=False)
 
     class Meta:
         abstract = True

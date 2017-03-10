@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from django_achievements.models import Achievement
 from .models import User, Authored
 
 authored_inlines = ()
