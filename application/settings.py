@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'rest_framework',
     'core.apps.CoreConfig',
     'ugc.apps.UgcConfig',
     'chats.apps.ChatsConfig',

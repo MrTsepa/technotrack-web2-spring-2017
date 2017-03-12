@@ -37,6 +37,8 @@ class AchievementRegistry:
 
         def check_achievement(instance, *args, **kwargs):
             model_instance = achievement_class.get_model_instance_for_observed_model(instance)
+            if not isinstance(model_instance, achievement_class.model):
+                return
             check_and_give_achievement(achievement_class, model_instance)
 
         post_save.connect(
