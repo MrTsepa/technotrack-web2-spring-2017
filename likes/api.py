@@ -6,20 +6,23 @@ from application.api import register
 
 
 class LikeSerializer(serializers.ModelSerializer):
-    target = serializers.SerializerMethodField('get_target_hyperlink_field')
+    target = serializers.SerializerMethodField()
 
-    def get_target_hyperlink_field(self, obj):
+    def get_target(self, obj):
         viewname = '%s-detail' % obj.target_content_type.name
         return reverse(viewname, (obj.target_id,))
 
     class Meta:
         model = Like
-        fields = 'target',
+        fields = 'id', 'target',
 
 
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Like.objects.all()
     serializer_class = LikeSerializer
     permission_classes = permissions.IsAuthenticated,
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 register('likes', LikeViewSet)

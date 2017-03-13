@@ -5,9 +5,12 @@ from core.models import Authored, Dated
 
 
 class Chat(Authored):
-    participants = models.ManyToManyField("core.User")
+    participants = models.ManyToManyField("core.User", related_name="chats")
+
+    def __unicode__(self):
+        return u'Chat, id: %d' % self.id
 
 
 class Message(Authored, Dated):
     text = models.TextField()
-    chat = models.ForeignKey(Chat, related_name="messages_related")
+    chat = models.ForeignKey(Chat, related_name="messages")

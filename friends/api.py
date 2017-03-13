@@ -16,5 +16,8 @@ class FriendshipViewSet(viewsets.ModelViewSet):
     serializer_class = FriendshipSerializer
     permission_classes = permissions.IsAuthenticated,
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
 
 register('friendships', FriendshipViewSet)
