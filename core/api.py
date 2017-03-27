@@ -32,7 +32,6 @@ class FullUserSerializer(serializers.ModelSerializer):
             "groups",
             "user_permissions",
             "achievements",
-            "chats"
         )
         read_only_fields = (
             "password",

@@ -1,4 +1,6 @@
+from django.db.models import Q
 from rest_framework import serializers, viewsets, permissions, pagination
+from rest_api.utils import QueryParamApiView
 
 from .models import Message, Chat
 
@@ -12,49 +14,30 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = 'id', 'text', 'chat'
 
 
-class Pagination(pagination.PageNumberPagination):
-    page_size = 10
-
-
-class CanViewMessage(permissions.BasePermission):
-
-    def has_object_permission(self, request, view, obj):
-        return request.user in obj.chat.participants.all() or request.user == obj.author
-
-
-class MessageViewSet(viewsets.ModelViewSet):
+class MessageViewSet(viewsets.ModelViewSet, QueryParamApiView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    permission_classes = permissions.IsAuthenticated, CanViewMessage
-    pagination_class = Pagination
+    permission_classes = permissions.IsAuthenticated,
+
+    query_params = {
+        'id': 'id',
+        'chat': 'chat_id',
+        'author': 'author_id'
+    }
 
     def get_queryset(self):
         qs = super(MessageViewSet, self).get_queryset()
-
-        if self.request.query_params.get('chat'):
-            qs = qs.filter(chat_id=self.request.query_params.get('chat'))
-
-        if self.suffix == u'List':
-            ids = [obj.id for obj in qs if self.has_object_permission(self.request, obj)]
-            qs = qs.filter(id__in=ids)
+        qs = qs.filter(
+            Q(author=self.request.user) |
+            Q(chat__participants=self.request.user)
+        )
+        qs = qs.distinct()
         return qs
-
-    def has_object_permission(self, request, obj):
-        for permission in self.get_permissions():
-            if not permission.has_object_permission(request, self, obj):
-                return False
-        return True
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
 register('messages', MessageViewSet)
-
-
-class IsParticipant(permissions.BasePermission):
-
-    def has_object_permission(self, request, view, obj):
-        return request.user in obj.participants.all() or request.user == obj.author
 
 
 class ChatSerializer(serializers.ModelSerializer):
@@ -64,23 +47,25 @@ class ChatSerializer(serializers.ModelSerializer):
         fields = 'id', 'participants',
 
 
-class ChatViewSet(viewsets.ModelViewSet):
+class ChatViewSet(viewsets.ModelViewSet, QueryParamApiView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
-    permission_classes = permissions.IsAuthenticated, IsParticipant
+    permission_classes = permissions.IsAuthenticated,
+
+    query_params = {
+        'id': 'id',
+        'author': 'author_id',
+        'participant': 'participants'
+    }
 
     def get_queryset(self):
         qs = super(ChatViewSet, self).get_queryset()
-        if self.suffix == u'List':
-            ids = [obj.id for obj in qs if self.has_object_permission(self.request, obj)]
-            qs = qs.filter(id__in=ids)
+        qs = qs.filter(
+            Q(author=self.request.user) |
+            Q(participants=self.request.user)
+        )
+        qs = qs.distinct()
         return qs
-
-    def has_object_permission(self, request, obj):
-        for permission in self.get_permissions():
-            if not permission.has_object_permission(request, self, obj):
-                return False
-        return True
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

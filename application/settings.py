@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'likes.apps.LikesConfig',
     'feed.apps.FeedConfig',
     'django_achievements.apps.DjangoAchievementsConfig',
+    'rest_api.apps.RestApiConfig'
 ]
 
 MIDDLEWARE = [
@@ -142,6 +143,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 if TESTING:

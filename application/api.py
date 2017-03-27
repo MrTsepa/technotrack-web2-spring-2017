@@ -23,14 +23,7 @@ def register(name, viewset):
             viewset.serializer_class.Meta.read_only_fields += 'created', 'updated',
 
         if issubclass(model, Likable):
-            from likes.api import LikeSerializer
-
-            class C(viewset.serializer_class):
-                likes = LikeSerializer(many=True, read_only=True)
-
-            viewset.serializer_class = C
-
-            viewset.serializer_class.Meta.fields += 'likes', 'likescount',
-            viewset.serializer_class.Meta.read_only_fields += 'likes', 'likescount',
+            viewset.serializer_class.Meta.fields += 'likescount',
+            viewset.serializer_class.Meta.read_only_fields += 'likescount',
 
     router.register(name, viewset)
