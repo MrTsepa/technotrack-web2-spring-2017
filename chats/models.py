@@ -14,3 +14,6 @@ class Chat(Authored):
 class Message(Authored, Dated):
     text = models.TextField()
     chat = models.ForeignKey(Chat, related_name="messages")
+
+    def __unicode__(self):
+        return u'Message, id: %d, chat: %d' % (self.id, self.chat.id)

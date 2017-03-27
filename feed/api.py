@@ -11,7 +11,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     def get_created_object(self, obj):
         viewname = '%s-detail' % obj.object_content_type.name
-        return reverse(viewname, (obj.object_id,))
+        return reverse(viewname, (obj.object_id,), request=self.context['request'])
 
     class Meta:
         model = CreationEvent

@@ -1,5 +1,4 @@
 from rest_framework import routers
-from rest_framework import serializers
 
 from core.models import Authored, Dated
 from likes.models import Likable
@@ -28,6 +27,7 @@ def register(name, viewset):
 
             class C(viewset.serializer_class):
                 likes = LikeSerializer(many=True, read_only=True)
+
             viewset.serializer_class = C
 
             viewset.serializer_class.Meta.fields += 'likes', 'likescount',
