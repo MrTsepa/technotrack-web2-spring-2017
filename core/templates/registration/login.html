@@ -1,0 +1,12 @@
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <h2>Login with social_net</h2>
+    <a href="{% url 'social:begin' 'vk-oauth2' %}">VK</a>
+{% endblock %}

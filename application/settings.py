@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'rest_framework',
+    'social_django',
     'core.apps.CoreConfig',
     'ugc.apps.UgcConfig',
     'chats.apps.ChatsConfig',
@@ -124,6 +125,14 @@ AUTH_PASSWORD_VALIDATORS = [
     # },
 ]
 
+SOCIAL_AUTH_VK_OAUTH2_KEY = config.get('vk', 'KEY')
+SOCIAL_AUTH_VK_OAUTH2_SECRET = config.get('vk', 'SECRET')
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

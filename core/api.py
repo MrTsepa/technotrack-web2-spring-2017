@@ -19,7 +19,6 @@ class FullUserSerializer(serializers.ModelSerializer):
         model = User
         fields = (
             "id",
-            "password",
             "last_login",
             "is_superuser",
             "username",
