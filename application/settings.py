@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'debug_toolbar',
     'rest_framework',
+    'rest_framework.authtoken',
     'social_django',
+    'webpack_loader',
     'core.apps.CoreConfig',
     'ugc.apps.UgcConfig',
     'chats.apps.ChatsConfig',
@@ -153,9 +155,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(os.path.join(BASE_DIR, 'frontend'), 'static'),
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'build/',
+        'STATS_FILE': os.path.join(os.path.join(BASE_DIR, 'frontend'), 'webpack-stats.json'),
+    }
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'

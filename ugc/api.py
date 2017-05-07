@@ -2,10 +2,13 @@ from rest_framework import serializers, viewsets, permissions
 
 from .models import Post
 
+from core.api import UserSerializer
+
 from application.api import register
 
 
 class PostSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
 
     class Meta:
         model = Post

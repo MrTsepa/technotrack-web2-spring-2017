@@ -16,13 +16,17 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 from django.conf import settings
 
 from .api import router
+from rest_framework.authtoken import views
 
 urlpatterns = [
+    url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
+    url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^login/$', auth_views.login),
     url(r'^logout/$', auth_views.logout),
     url(r'^social/', include('social_django.urls', namespace='social')),

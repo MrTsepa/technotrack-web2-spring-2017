@@ -1,2 +1,4 @@
 *.pyc
 .idea
+frontend/node_modules/
+frontend/static/
