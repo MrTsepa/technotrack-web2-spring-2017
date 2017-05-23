@@ -5,6 +5,7 @@ from rest_api.utils import QueryParamApiView
 from .models import Message, Chat
 
 from application.api import register
+from core.api import UserSerializer
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -41,10 +42,19 @@ register('messages', MessageViewSet)
 
 
 class ChatSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
+    last_message = serializers.SerializerMethodField()
+
+    def get_last_message(self, obj):
+        # print(obj.messages.all())
+        try:
+            return MessageSerializer(obj.messages.latest('created')).data
+        except:
+            return None
 
     class Meta:
         model = Chat
-        fields = 'id', 'participants',
+        fields = 'id', 'participants', 'last_message'
 
 
 class ChatViewSet(viewsets.ModelViewSet, QueryParamApiView):

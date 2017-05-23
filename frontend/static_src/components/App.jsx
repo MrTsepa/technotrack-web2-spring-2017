@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { BrowserRouter, Route, IndexRoute } from 'react-router-dom';
 import { selectPage } from '../actions/router.jsx';
 
 import 'grommet/scss/vanilla/index.scss';
@@ -14,9 +15,9 @@ import Chat from './Chat.jsx'
 import ChatList from './ChatList.jsx'
 
 const MENU_ITEMS = [
-    {name: 'feed', text: 'Feed'},
-    {name: 'myPage', text: 'MyPage'},
-    {name: 'chats', text: 'Chats'}
+    {name: 'feed', text: 'Feed', path: '/'},
+    {name: 'myPage', text: 'MyPage', path: '/my_page'},
+    {name: 'chats', text: 'Chats', path: '/chats'}
 ]
 
 const OWNER = {
@@ -74,22 +75,28 @@ class AppComponent extends React.Component {
     }
 
     render() {
-        var page;
+        let page;
         switch (this.props.currentPage) {
             case 'feed':
-                page = <Feed />
+                page = <Feed />;
                 break;
             case 'myPage':
-                page =  <MyPage />
+                page =  <MyPage />;
                 break;
             case 'chats':
-                page = <ChatList chatList={ CHAT_LIST } />
+                page = <ChatList />;
                 break;
         }
         return (
         <MuiThemeProvider>
             <App>
                 <Layout onSelect={ this.onMenuSelect } menuItems={ MENU_ITEMS }>
+                {/*
+                    <Route exact={true} path='/' component={Feed} />
+                    <Route path='/my_page' component={MyPage} />
+                    <Route path='/chats/' component={ChatList} />
+                */}
+                    {/* this.props.children */}
                     { page }
                 </Layout>
             </App>

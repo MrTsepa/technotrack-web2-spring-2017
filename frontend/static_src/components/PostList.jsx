@@ -8,18 +8,12 @@ import Post from './Post.jsx';
 import List from 'grommet/components/List';
 import ListItem from 'grommet/components/ListItem';
 
+import Loading from 'react-loading-animation';
+
 import { loadPosts, loadPostsSuccess, loadPostsError, fetchPosts } from '../actions/posts.jsx';
-import { POST_RESPONCE } from '../mock_data.jsx';
 
 class PostListComponent extends React.Component {
     componentDidMount() {
-        // this.props.loadPosts();
-        // window.setTimeout(
-        //     () => {
-        //         this.props.loadPostsSuccess(POST_RESPONCE);
-        //     },
-        //     2000
-        // );
         this.props.fetchPosts();
     }
 
@@ -31,13 +25,13 @@ class PostListComponent extends React.Component {
             </ListItem>
         );
         return (
-            this.props.isLoading ?
-
-            <div>Loading...</div> :
-
-            <List className="post-list">
-                { postList }
-            </List>
+            <div>
+                <Loading isLoading={ this.props.isLoading}>
+                </Loading>
+                <List className="post-list">
+                    { postList }
+                </List>
+            </div>
         );
     }
 }

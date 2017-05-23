@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import PostForm from './PostForm.jsx'
-import PostList from './PostList.jsx'
+import PostForm from './PostForm.jsx';
+import PostList from './PostList.jsx';
 
 import Box from 'grommet/components/Box';
 import Columns from 'grommet/components/Columns';
@@ -11,9 +11,6 @@ import Image from 'grommet/components/Image';
 import { OWNER } from '../mock_data.jsx';
 
 class MyPageComponent extends React.Component {
-    onCreate = (post) => {
-    }
-
     render () {
         return (
                 <Columns
@@ -47,9 +44,7 @@ class MyPageComponent extends React.Component {
                         <Box
                             size="large"
                             alignSelf="center">
-                            <PostList
-                                postList={ this.props.postList }
-                                isLoading={ false } />
+                            <PostList />
                         </Box>
                     </Box>
                 </Columns>
@@ -61,6 +56,6 @@ MyPageComponent.propTypes = {
     postList: PropTypes.arrayOf(
         PropTypes.object
     )
-}
+};
 
 export default MyPageComponent;

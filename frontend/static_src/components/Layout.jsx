@@ -24,6 +24,7 @@ class LayoutComponent extends React.Component {
                 name={ e.name }
                 key={ e.name }
                 label={ e.text }
+                path={ e.path }
             />
         )
         return (

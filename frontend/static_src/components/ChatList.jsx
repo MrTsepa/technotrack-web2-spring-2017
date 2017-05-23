@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 // import Chat from './Chat.jsx';
 import ChatBrief from './ChatBrief.jsx';
@@ -7,27 +8,49 @@ import ChatBrief from './ChatBrief.jsx';
 import List from 'grommet/components/List';
 import ListItem from 'grommet/components/ListItem';
 
+import Loading from 'react-loading-animation';
+
+import { fetchChats } from '../actions/chats.jsx';
 
 class ChatListComponent extends React.Component {
+    componentDidMount() {
+        this.props.fetchChats();
+    }
+
     render() {
         const chatList = this.props.chatList.map(
-            chat =>
-            <ListItem key={ chat.id } pad="small">
+            id =>
+            <ListItem key={ id } pad="small">
                 <ChatBrief
-                    { ...chat }
+                    id={ id }
                 />
             </ListItem>
         );
         return (
-            <List>
-                { chatList }
-            </List>
+            <div>
+                <Loading isLoading={ this.props.isLoading }>
+                </Loading>
+                <List>
+                    { chatList }
+                </List>
+            </div>
         );
     }
 }
 
 ChatListComponent.propTypes = {
-    chatList: PropTypes.arrayOf(PropTypes.shape(ChatBrief.propTypes)),
 };
 
-export default ChatListComponent;
+const mapStateToProps = state => ({
+    chatList: state.chats.chatList,
+    isLoading: state.chats.isLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+    ...bindActionCreators({ fetchChats }, dispatch),
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ChatListComponent);
