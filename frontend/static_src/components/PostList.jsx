@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -10,7 +9,14 @@ import ListItem from 'grommet/components/ListItem';
 
 import Loading from 'react-loading-animation';
 
-import { loadPosts, loadPostsSuccess, loadPostsError, fetchPosts } from '../actions/posts.jsx';
+import {
+    loadPosts,
+    loadPostsSuccess,
+    loadPostsError,
+    fetchPosts,
+    openPostModal,
+    closePostModal
+} from '../actions/posts.jsx';
 
 class PostListComponent extends React.Component {
     componentDidMount() {
@@ -20,13 +26,15 @@ class PostListComponent extends React.Component {
     render() {
         const postList = this.props.postList.map(
             id =>
-            <ListItem key={ id } pad="small">
+            <ListItem key={ id } pad="small"
+                    onClick={this.props.openPostModal.bind(this, id)}
+                >
                 <Post id={ id } />
             </ListItem>
         );
         return (
             <div>
-                <Loading isLoading={ this.props.isLoading}>
+                <Loading isLoading={ this.props.isLoading }>
                 </Loading>
                 <List className="post-list">
                     { postList }
@@ -45,7 +53,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    ...bindActionCreators({ loadPosts, loadPostsSuccess, loadPostsError, fetchPosts }, dispatch),
+    ...bindActionCreators({
+        loadPosts,
+        loadPostsSuccess,
+        loadPostsError,
+        fetchPosts,
+        openPostModal,
+        closePostModal
+    }, dispatch),
 });
 
 export default connect(

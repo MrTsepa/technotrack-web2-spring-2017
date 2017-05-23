@@ -4,6 +4,8 @@ export const ADD_POST = 'ADD_POST';
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
 export const LOAD_POSTS_ERROR = 'LOAD_POSTS_ERROR';
+export const OPEN_POST_MODAL = 'OPEN_POST_MODAL';
+export const CLOSE_POST_MODAL = 'CLOSE_POST_MODAL';
 
 export function addPost(post) {
     return {
@@ -41,5 +43,18 @@ export function fetchPosts() {
         })
             .then(responce => responce.json())
             .then(json => dispatch(loadPostsSuccess(json)));
+    };
+}
+
+export function openPostModal(id) {
+    return {
+        type: OPEN_POST_MODAL,
+        id: id
+    };
+}
+
+export function closePostModal() {
+    return {
+        type: CLOSE_POST_MODAL,
     };
 }
