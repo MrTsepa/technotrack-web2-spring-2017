@@ -1,29 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Message from './Message.jsx';
 
 import List from 'grommet/components/List';
 import ListItem from 'grommet/components/ListItem';
+import Loading from 'react-loading-animation';
+
+
+import { fetchChat, closeChat } from '../actions/chats.jsx';
 
 class ChatComponent extends React.Component {
+    componentDidMount() {
+        this.props.fetchChat(this.props.id);
+    }
+
+    componentWillUnmount() {
+        this.props.closeChat();
+    }
+
     render() {
         const messageList = this.props.messageList.map(
-            message =>
-            <ListItem key={ message.id } pad="small">
-                <Message {...message} />
+            id =>
+            <ListItem key={ id } pad="small">
+                <Message id={ id } />
             </ListItem>
         );
+        console.log(messageList);
         return (
-            <List>
-                { messageList }
-            </List>
+            <div>
+                <Loading isLoading={ this.props.isLoading }>
+                </Loading>
+                <List className="post-list">
+                    { messageList }
+                </List>
+            </div>
         );
     }
 }
 
 ChatComponent.propTypes = {
-    messageList: PropTypes.arrayOf(PropTypes.shape(Message.propTypes)),
+    id: PropTypes.number.isRequired
 };
 
-export default ChatComponent;
+const mapStateToProps = (state, props) => {
+    // console.log(state.chats.chatMessageList);
+    // console.log(props.id);
+    return {
+        messageList: state.chats.chatMessageList[props.id],
+        isLoading: state.chats.isChatLoading
+    };
+};
+
+const mapDispatchToProps = dispatch => ({
+    ...bindActionCreators({ fetchChat, closeChat }, dispatch),
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ChatComponent);

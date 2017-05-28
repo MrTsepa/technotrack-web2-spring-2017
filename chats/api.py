@@ -9,7 +9,8 @@ from core.api import UserSerializer
 
 
 class MessageSerializer(serializers.ModelSerializer):
-
+    author = UserSerializer(read_only=True)
+    
     class Meta:
         model = Message
         fields = 'id', 'text', 'chat'

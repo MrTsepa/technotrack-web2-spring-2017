@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-// import Chat from './Chat.jsx';
+import Chat from './Chat.jsx';
 import ChatBrief from './ChatBrief.jsx';
 
 import List from 'grommet/components/List';
@@ -10,7 +10,7 @@ import ListItem from 'grommet/components/ListItem';
 
 import Loading from 'react-loading-animation';
 
-import { fetchChats } from '../actions/chats.jsx';
+import { fetchChats, openChat } from '../actions/chats.jsx';
 
 class ChatListComponent extends React.Component {
     componentDidMount() {
@@ -18,9 +18,15 @@ class ChatListComponent extends React.Component {
     }
 
     render() {
+        if (this.props.isChatOpened) {
+            return (
+                <Chat id={ this.props.currentChat } />
+            )
+        }
         const chatList = this.props.chatList.map(
             id =>
-            <ListItem key={ id } pad="small">
+            <ListItem key={ id } pad="small"
+                onClick={this.props.openChat.bind(this, id)}>
                 <ChatBrief
                     id={ id }
                 />
@@ -43,11 +49,13 @@ ChatListComponent.propTypes = {
 
 const mapStateToProps = state => ({
     chatList: state.chats.chatList,
-    isLoading: state.chats.isLoading
+    isLoading: state.chats.isLoading,
+    isChatOpened: state.chats.isChatOpened,
+    currentChat: state.chats.currentChat
 });
 
 const mapDispatchToProps = dispatch => ({
-    ...bindActionCreators({ fetchChats }, dispatch),
+    ...bindActionCreators({ fetchChats, openChat }, dispatch),
 });
 
 export default connect(

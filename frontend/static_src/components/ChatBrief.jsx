@@ -7,7 +7,7 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 
 class ChatBriefComponent extends React.Component {
     render() {
-        const name = this.props.author.username;
+        const name = this.props.author && this.props.author.username ? this.props.author.username : '';
         const avaSrc = this.props.avaSrc;
         return (
             <Card zDepth={ 2 }>
@@ -24,24 +24,6 @@ class ChatBriefComponent extends React.Component {
     }
 }
 
-// ChatBriefComponent.propTypes = {
-//     name: PropTypes.string,
-//     avaSrc: PropTypes.string,
-//     participants: PropTypes.arrayOf(
-//         PropTypes.shape({
-//             name:  PropTypes.string.isRequired,
-//             avaSrc:  PropTypes.string,
-//         })
-//     ).isRequired,
-//     lastMessage: PropTypes.shape({
-//         content: PropTypes.string,
-//         time: PropTypes.string,
-//         owner: PropTypes.shape({
-//             name:  PropTypes.string.isRequired,
-//             avaSrc:  PropTypes.string,
-//         }).isRequired,
-//     }).isRequired
-// };
 ChatBriefComponent.propTypes = {
     id: PropTypes.number.isRequired
 };

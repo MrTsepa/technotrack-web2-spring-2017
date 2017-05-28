@@ -14,7 +14,7 @@ import AccessibleIcon from 'grommet/components/icons/base/Accessible'
 class LayoutComponent extends React.Component {
     onSelect = (name) => {
         this.props.onSelect(name);
-    }
+    };
 
     render() {
         const anchors = this.props.menuItems.map(
@@ -24,9 +24,8 @@ class LayoutComponent extends React.Component {
                 name={ e.name }
                 key={ e.name }
                 label={ e.text }
-                path={ e.path }
             />
-        )
+        );
         return (
             <div>
                 <Header
@@ -53,25 +52,6 @@ class LayoutComponent extends React.Component {
                 </Split>
             </div>
         );
-        // return (
-        //     <div>
-        //         <Header colorIndex='neutral-1'>
-        //             Header
-        //         </Header>
-        //         <Split flex='right'>
-        //             <Box justify='center'
-        //                  align='center'
-        //                  colorIndex='neutral-2'>
-        //                 { buttons }
-        //             </Box>
-        //             <Box justify='center'
-        //                  align='center'
-        //                  colorIndex='light-2'>
-        //                 { this.props.children }
-        //             </Box>
-        //         </Split>
-        //     </div>
-        // );
     }
 
 }
