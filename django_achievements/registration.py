@@ -1,3 +1,5 @@
+from functools import partial
+
 from .registry import AchievementRegistry
 
 
@@ -58,5 +60,6 @@ class Achievement:
 
 AchievementRegistry = AchievementRegistry()
 register = AchievementRegistry.register
+register_async = partial(AchievementRegistry.register, async=True)
 unregister = AchievementRegistry.unregister
 unregister_all_achievements = AchievementRegistry.unregister_all

@@ -177,6 +177,9 @@ REST_FRAMEWORK = {
     )
 }
 
+BROKER_URL = 'redis://localhost:6379/0'
+ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 if TESTING:
     print "NO MIGRATIONS"

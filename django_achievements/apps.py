@@ -15,7 +15,8 @@ class DjangoAchievementsConfig(AppConfig):
                 try:
                     from django.utils.module_loading import autodiscover_modules
                     autodiscover_modules('achievements')
-                except:
-                    print "You need to run migrations first"
+                except Exception as e:
+                    print e
+                    print "Maybe, you need to run migrations first"
 
             connection_created.connect(register_achievements, weak=False)

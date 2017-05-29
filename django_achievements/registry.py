@@ -2,6 +2,7 @@ from django.db.models.signals import post_save, post_delete
 
 from .models import AchievementModel
 from .utils import check_and_give_achievement
+from .tasks import check_achievement_task
 
 
 class AlreadyRegistered(Exception):
@@ -16,7 +17,7 @@ class AchievementRegistry:
     def __init__(self):
         self._registry = {}
 
-    def register(self, achievement_class):
+    def register(self, achievement_class, async=False):
         if achievement_class.name in self._registry:
             raise AlreadyRegistered
 
@@ -39,7 +40,10 @@ class AchievementRegistry:
             model_instance = achievement_class.get_model_instance_for_observed_model(instance)
             if not isinstance(model_instance, achievement_class.model):
                 return
-            check_and_give_achievement(achievement_class, model_instance)
+            if async:
+                check_achievement_task.apply_async([achievement_class.name, model_instance.id, ])
+            else:
+                check_and_give_achievement(achievement_class, model_instance)
 
         post_save.connect(
             check_achievement,
@@ -55,7 +59,10 @@ class AchievementRegistry:
         )
 
         for model_instance in achievement_class.model.objects.all():
-            check_and_give_achievement(achievement_class, model_instance)
+            if async:
+                check_achievement_task.apply_async([achievement_class.name, model_instance.id, ])
+            else:
+                check_and_give_achievement(achievement_class, model_instance)
 
         return achievement_class
 

@@ -1,4 +1,4 @@
-from django_achievements.registration import Achievement, register
+from django_achievements.registration import Achievement, register, register_async
 from likes.models import Like
 from ugc.models import Post
 from .models import User
@@ -70,7 +70,7 @@ class LikeCountAchievement(Achievement):
         return observed_model_instance.target
 
 
-@register
+@register_async
 class Like1(LikeCountAchievement):
     name = "1_like"
     count = 1
@@ -78,7 +78,7 @@ class Like1(LikeCountAchievement):
     description = "You've post has 1 like"
 
 
-@register
+@register_async
 class Like10(LikeCountAchievement):
     name = "10_likes"
     count = 10
@@ -86,7 +86,7 @@ class Like10(LikeCountAchievement):
     description = "You've post has 10 likes"
 
 
-@register
+@register_async
 class Like100(LikeCountAchievement):
     name = "100_likes"
     count = 100
