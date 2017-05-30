@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'social_django',
     'webpack_loader',
+    'haystack',
 
     'core.apps.CoreConfig',
     'ugc.apps.UgcConfig',
@@ -179,6 +180,15 @@ REST_FRAMEWORK = {
 
 BROKER_URL = 'redis://localhost:6379/0'
 ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+}
+
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 if TESTING:

@@ -12,7 +12,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = 'id', 'text',
+        fields = 'id', 'text', 'title'
 
 
 class PostViewSet(viewsets.ModelViewSet):

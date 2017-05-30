@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.login),
     url(r'^logout/$', auth_views.logout),
     url(r'^social/', include('social_django.urls', namespace='social')),
+    url(r'^search/', include('haystack.urls')),
 ]
 
 if settings.DEBUG:

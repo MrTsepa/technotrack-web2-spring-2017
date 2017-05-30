@@ -8,6 +8,7 @@ from likes.models import Likable
 
 
 class Post(Feedable, Authored, Dated, Likable):
+    title = models.CharField(max_length=256)
     text = models.TextField()
 
     def __str__(self):
