@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'social_django',
     'webpack_loader',
     'haystack',
+    'templated_email',
 
     'core.apps.CoreConfig',
     'ugc.apps.UgcConfig',
@@ -57,7 +58,8 @@ INSTALLED_APPS = [
     'likes.apps.LikesConfig',
     'feed.apps.FeedConfig',
     'django_achievements.apps.DjangoAchievementsConfig',
-    'rest_api.apps.RestApiConfig'
+    'rest_api.apps.RestApiConfig',
+    'mailing.apps.MailingConfig',
 ]
 
 MIDDLEWARE = [
@@ -130,6 +132,14 @@ AUTH_PASSWORD_VALIDATORS = [
     # },
 ]
 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config.get('email', 'USER')
+EMAIL_HOST_PASSWORD = config.get('email', 'PASSWORD')
+
 SOCIAL_AUTH_VK_OAUTH2_KEY = config.get('vk', 'KEY')
 SOCIAL_AUTH_VK_OAUTH2_SECRET = config.get('vk', 'SECRET')
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', ]
@@ -178,8 +188,8 @@ REST_FRAMEWORK = {
     )
 }
 
-BROKER_URL = 'redis://localhost:6379/0'
-ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['pickle', 'json', 'msgpack', 'yaml']
 
 
 HAYSTACK_CONNECTIONS = {

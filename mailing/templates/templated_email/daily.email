@@ -1,0 +1,34 @@
+{% block subject %}Posts at {{ date }}{% endblock %}
+{% block plain %}
+    Hi {{username}},
+    Your friends has published these posts at {{ date }}
+    {% for post in posts %}
+        {{ post.author.username }}
+        {{ post.title }}
+        {{ post.text }}
+    {% endfor %}
+
+{% endblock %}
+
+{% block html %}
+    <p>Hi {{username}},</p>
+    <p>Your friends has published these posts at {{ date }}</p>
+    <ul>
+    {% for post in posts %}
+        <li>
+            <img src="{{ ava_image }}">
+            {{ post.author.username }}
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.text }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+    {% if email_uuid %}
+        <!-- Note: you will need to add your site since you will need to access
+                 it from the email -->
+        You can view this e-mail on the web here:
+        <a href="{% url 'templated_email:show_email' uuid=email_uuid %}">
+            here
+        </a>
+    {% endif %}
+{% endblock %}
