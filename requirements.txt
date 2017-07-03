@@ -8,3 +8,4 @@ djangorestframework
 social-auth-app-django
 django-webpack-loader
 django-templated-email
+adjacent

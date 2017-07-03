@@ -1,9 +1,20 @@
+# coding: utf8
 from django.db.models.signals import post_save
 
 from friends.models import Friendship, Friend
 
 
 def create_friends_on_friendship_approved(instance, *args, **kwargs):
+    from adjacent import Client
+
+    client = Client()
+
+    # add some messages to publish
+    client.publish("news", {"msg": u"Вам предложил дружить {}!".format(instance.author.username)})
+
+    # actually send request with 2 publish messages added above to Centrifuge
+    response = client.send()
+
     if isinstance(instance, Friendship):
         user1 = instance.author
         user2 = instance.recipient

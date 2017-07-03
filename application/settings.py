@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'haystack',
     'templated_email',
+    'adjacent',
 
     'core.apps.CoreConfig',
     'ugc.apps.UgcConfig',
@@ -90,6 +91,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'adjacent.context_processors.main',
             ],
         },
     },
@@ -199,6 +201,9 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
+CENTRIFUGE_ADDRESS = 'ws:192.168.0.110:8080/'
+CENTRIFUGE_SECRET = '74b1f41e-673b-4227-84e4-54d77892ce2f'
+CENTRIFUGE_TIMEOUT = 10
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 if TESTING:
